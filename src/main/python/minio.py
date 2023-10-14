@@ -34,13 +34,6 @@ from pyspark.sql.types import StringType, StructType, StructField
 # $example off:programmatic_schema$
 import os
 
-def basic_df_example(spark: SparkSession) -> None:
-    # spark is an existing SparkSession
-    df = spark.read.json("examples/src/main/resources/people.json")
-    # Displays the content of the DataFrame to stdout
-    df.show()
-    df.printSchema()
-
     
 if __name__ == "__main__":
     # $example on:init_session$
