@@ -41,9 +41,13 @@ if __name__ == "__main__":
     access_key = os.environ.get("MINIO_ACCESS_KEY")
     secret_key = os.environ.get("MINIO_SECRET_KEY")
     minio_endpoint = os.environ.get("MINIO_ENDPOINT")
+    print(access_key)
+    print(secret_key)
+    print(minio_endpoint)
+    
     spark = SparkSession \
         .builder \
-        .appName("Python Spark SQL basic example") \
+        .appName("Pyspark com Minio") \
         .config("spark.hadoop.fs.s3a.endpoint", minio_endpoint) \
         .getOrCreate()
     # $example off:init_session$
