@@ -34,12 +34,7 @@ from pyspark.sql.types import StringType, StructType, StructField
 # $example off:programmatic_schema$
 import os
    # Get the Spark logger
-logger = spark._jvm.org.apache.log4j
-log = logger.LogManager.getLogger(__name__)
 
-# Set the log level (optional, if needed)
-# You can set the log level to one of: "OFF", "FATAL", "ERROR", "WARN", "INFO", "DEBUG", "TRACE", "ALL"
-log.setLevel(logger.Level.INFO)
 
 if __name__ == "__main__":
     # $example on:init_session$
@@ -47,9 +42,7 @@ if __name__ == "__main__":
     access_key = os.environ.get("MINIO_ACCESS_KEY")
     secret_key = os.environ.get("MINIO_SECRET_KEY")
     minio_endpoint = os.environ.get("MINIO_ENDPOINT")
-    log.info(access_key)
-    log.info(secret_key)
-    log.info(minio_endpoint)
+
 
 
     spark = SparkSession \
@@ -64,7 +57,16 @@ if __name__ == "__main__":
         .getOrCreate()
     # $example off:init_session$
     # Configure the AWS access and secret keys
+    logger = spark._jvm.org.apache.log4j
+    log = logger.LogManager.getLogger(__name__)
 
+    # Set the log level (optional, if needed)
+    # You can set the log level to one of: "OFF", "FATAL", "ERROR", "WARN", "INFO", "DEBUG", "TRACE", "ALL"
+    log.setLevel(logger.Level.INFO)
+
+    log.info(access_key)
+    log.info(secret_key)
+    log.info(minio_endpoint)
 
     # Set the MinIO endpoint
     # spark.conf.set("spark.hadoop.fs.s3a.endpoint", "http://minio-server:9000")
