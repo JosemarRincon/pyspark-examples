@@ -33,17 +33,24 @@ from pyspark.sql import Row
 from pyspark.sql.types import StringType, StructType, StructField
 # $example off:programmatic_schema$
 import os
+   # Get the Spark logger
+logger = spark._jvm.org.apache.log4j
+log = logger.LogManager.getLogger(__name__)
 
-    
+# Set the log level (optional, if needed)
+# You can set the log level to one of: "OFF", "FATAL", "ERROR", "WARN", "INFO", "DEBUG", "TRACE", "ALL"
+log.setLevel(logger.Level.INFO)
+
 if __name__ == "__main__":
     # $example on:init_session$
     # Recupere uma variável de ambiente específica
     access_key = os.environ.get("MINIO_ACCESS_KEY")
     secret_key = os.environ.get("MINIO_SECRET_KEY")
     minio_endpoint = os.environ.get("MINIO_ENDPOINT")
-    print(access_key)
-    print(secret_key)
-    print(minio_endpoint)
+    log.info(access_key)
+    log.info(secret_key)
+    log.info(minio_endpoint)
+
 
     spark = SparkSession \
         .builder \
@@ -65,13 +72,7 @@ if __name__ == "__main__":
     # Use the S3A URL to read data
     df_lista_cns = spark.read.parquet("s3a://cns/lista_cns")
 
-    # Get the Spark logger
-    logger = spark._jvm.org.apache.log4j
-    log = logger.LogManager.getLogger(__name__)
-
-    # Set the log level (optional, if needed)
-    # You can set the log level to one of: "OFF", "FATAL", "ERROR", "WARN", "INFO", "DEBUG", "TRACE", "ALL"
-    log.setLevel(logger.Level.INFO)
+ 
 
     # Log some messages
     log.info(df_lista_cns.show())
