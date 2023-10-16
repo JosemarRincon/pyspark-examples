@@ -60,7 +60,18 @@ if __name__ == "__main__":
     # Use the S3A URL to read data
     df_lista_cns = spark.read.parquet("s3a://cns/lista_cns")
 
-    df_lista_cns.show()
+    # Get the Spark logger
+    logger = spark._jvm.org.apache.log4j
+    log = logger.LogManager.getLogger(__name__)
+
+    # Set the log level (optional, if needed)
+    # You can set the log level to one of: "OFF", "FATAL", "ERROR", "WARN", "INFO", "DEBUG", "TRACE", "ALL"
+    log.setLevel(logger.Level.INFO)
+
+    # Log some messages
+    log.info(df_lista_cns.show())
+
+   
 
 
     spark.stop()
