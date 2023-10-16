@@ -44,19 +44,20 @@ if __name__ == "__main__":
     print(access_key)
     print(secret_key)
     print(minio_endpoint)
-    
+
     spark = SparkSession \
         .builder \
         .appName("Pyspark com Minio") \
         .config("spark.hadoop.fs.s3a.endpoint", minio_endpoint) \
+        .config("spark.hadoop.fs.s3a.access.key", access_key) \
+        .config("spark.hadoop.fs.s3a.secret.key", secret_key) \
+        .config("spark.hadoop.fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
+        .config("spark.hadoop.fs.s3a.path.style.access", "true") \
+        .config("spark.hadoop.fs.s3a.connection.ssl.enabled", "false") \
         .getOrCreate()
     # $example off:init_session$
     # Configure the AWS access and secret keys
-    spark.conf.set("spark.hadoop.fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")
-    spark.conf.set("spark.hadoop.fs.s3a.access.key", access_key)
-    spark.conf.set("spark.hadoop.fs.s3a.secret.key", secret_key)
-    spark.conf.set("spark.hadoop.fs.s3a.path.style.access", "true")
-    spark.conf.set("spark.hadoop.fs.s3a.connection.ssl.enabled", "false")
+
 
     # Set the MinIO endpoint
     # spark.conf.set("spark.hadoop.fs.s3a.endpoint", "http://minio-server:9000")
